@@ -5,6 +5,8 @@
  */
 package proyecto_ejercicio11;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author GABRIEL
@@ -52,12 +54,30 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setText("Digite el valor del monto presupuestal:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
+        txtMontoP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoPKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtMontoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 240, 30));
 
+        cmdCalcular.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmdCalcular.setText("Calcular");
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 80, 30));
 
+        cmdBorrar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmdBorrar.setText("Borrar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 80, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
@@ -100,6 +120,50 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+        // TODO add your handling code here:
+        txtMontoP.setText("");
+        txtG.setText("");
+        txtT.setText("");
+        txtP.setText("");
+        txtMontoP.requestFocusInWindow();
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+        // TODO add your handling code here:
+        if (txtMontoP.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Campo vacío. Por favor llénelo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtMontoP.requestFocusInWindow();
+        }
+        else if (txtMontoP.getText().equals(".")) {
+            JOptionPane.showMessageDialog(this, "No puede operar puntos", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtMontoP.setText("");
+            txtMontoP.requestFocusInWindow();
+        }
+        else {
+            double montoP, g, t , p;
+            montoP = Double.parseDouble(txtMontoP.getText());
+            g = montoP * 0.40;
+            t = montoP * 0.30;
+            p = montoP * 0.30;
+            txtG.setText(""+g);
+            txtT.setText(""+t);
+            txtP.setText(""+p);
+        }
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void txtMontoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoPKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != '.') {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (c == '.' && txtMontoP.getText().contains(".")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMontoPKeyTyped
 
     /**
      * @param args the command line arguments
